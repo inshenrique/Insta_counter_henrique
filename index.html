@@ -15,16 +15,21 @@
             font-weight: bold;
             color: #E1306C;
         }
+        #countdown {
+            font-size: 1.5em;
+            color: #333;
+        }
     </style>
 </head>
 <body>
-    <h1>Seguidores do Instagram do Perfil do Henrique</h1>
-    <p>O número atual de seguidores é:</p>
+    <h1>Seguidores do Instagram</h1>
+    <p>O número atual de seguidores do @perfil do Henrique é:</p>
     <p id="followers">Carregando...</p>
+    <p id="countdown">Próxima atualização em: 5</p>
 
     <script>
         async function getFollowers() {
-            const token = "IGAANTJNYPFOJBZAE1ORkxwNDNoM245T2JTd2Rnb25GRzNTeEdfU2g4cE9vbmVtOGRPQzhxSHFlaEctR0FBcVplNTlkSTJSZAUlPNUFMdmVYQ09CY2hYdGp0ODA4VWlqdmhUbnNMVTROYlp1RlRhMlQ4VHc3Ujg0RndCVFhVTTRiYwZDZD";
+            const token = "IGAANTJNYPFOJBZAE1ORkxwNDNoM245T2JTd2Rnb25GRzNTeEdfU2g4cE9vbmVtOGRPQzhxSHFlaEctR0FBcVplNTlkSTJSZAUlPNUFMdmVYQ09CY2hYdGp0ODA4VWlqdmhUbnNMVTROYlp1RlRhMlQ4VHc3Ujg0RndCVFhVTTRiYwZDZD"; // Substitua pelo seu token
             const url = `https://graph.instagram.com/me?fields=username,followers_count&access_token=${token}`;
 
             try {
@@ -36,21 +41,3 @@
                 if (!response.ok) {
                     throw new Error('Erro na resposta da API');
                 }
-                const data = await response.json();
-                
-                if (data.followers_count) {
-                    document.getElementById("followers").innerText = data.followers_count;
-                } else {
-                    document.getElementById("followers").innerText = "Erro ao carregar!";
-                }
-            } catch (error) {
-                document.getElementById("followers").innerText = "Erro ao carregar!";
-                console.error("Erro na API:", error);
-            }
-        }
-
-        // Atualiza a cada 5 segundos
-        setInterval(getFollowers, 5000);
-    </script>
-</body>
-</html>
