@@ -23,7 +23,7 @@
 </head>
 <body>
     <h1>Seguidores do Instagram</h1>
-    <p>O número atual de seguidores do @perfildohenrique é:</p>
+    <p>O número atual de seguidores @perfildohenrique é:</p>
     <p id="followers">Carregando...</p>
     <p id="countdown">Próxima atualização em: 5</p>
 
@@ -41,3 +41,36 @@
                 if (!response.ok) {
                     throw new Error('Erro na resposta da API');
                 }
+                const data = await response.json();
+                
+                if (data.followers_count) {
+                    document.getElementById("followers").innerText = data.followers_count;
+                } else {
+                    document.getElementById("followers").innerText = "Erro ao carregar!";
+                }
+            } catch (error) {
+                document.getElementById("followers").innerText = "Erro ao carregar!";
+                console.error("Erro na API:", error);
+            }
+        }
+
+        function startCountdown() {
+            let countdown = 5;
+            const countdownElement = document.getElementById("countdown");
+
+            const interval = setInterval(() => {
+                countdown--;
+                countdownElement.innerText = `Próxima atualização em: ${countdown}`;
+                if (countdown === 0) {
+                    clearInterval(interval);
+                    getFollowers();
+                    startCountdown();
+                }
+            }, 1000);
+        }
+
+        getFollowers();
+        startCountdown();
+    </script>
+</body>
+</html>
