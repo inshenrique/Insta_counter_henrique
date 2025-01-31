@@ -3,13 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contador de Seguidores</title>
+    <title>IG - Seguidores Henrique</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', Arial, sans-serif;
             text-align: center;
             margin-top: 50px;
             background-color: #f9f9f9;
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .profile-header img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            margin-right: 20px;
+        }
+        .profile-header h1 {
+            font-size: 2em;
+            font-weight: bold;
+            color: #E1306C;
         }
         .counter-box {
             display: inline-flex;
@@ -26,7 +44,7 @@
             display: flex;
         }
         .digit {
-            background: linear-gradient(to bottom, #ff007f, #8b00ff); /* Degradê rosa para roxo */
+            background: linear-gradient(to bottom, #8b00ff, #ff007f); /* Degradê roxo para rosa */
             color: white; /* Números em branco */
             padding: 10px 15px;
             margin: 2px;
@@ -39,6 +57,10 @@
             font-size: 1.2em;
             color: #333;
         }
+        .countdown-box .digit {
+            font-size: 1.5em;
+            margin: 0 5px;
+        }
         .follow-box {
             margin-top: 20px;
         }
@@ -46,11 +68,18 @@
             width: 200px;
             cursor: pointer;
         }
+        .follow-box p {
+            font-size: 1.2em;
+            color: #333;
+        }
     </style>
 </head>
 <body>
-    <h1>Seguidores do Instagram</h1>
-    <p>O número atual de seguidores @perfildohenrique é:</p>
+    <div class="profile-header">
+        <img src="profile.jpg" alt="Foto do Perfil">
+        <h1>Seguidores do Henrique</h1>
+    </div>
+    <p>O número atual de seguidores do @perfildohenrique é:</p>
     <div class="counter-box">
         <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="50" alt="Instagram Logo">
         <div id="followers" class="split-flap">
@@ -62,7 +91,7 @@
             <span class="digit">0</span>
         </div>
     </div>
-    <div class="countdown-box" id="countdown">Próxima atualização em: 5</div>
+    <div class="countdown-box" id="countdown">Próxima atualização em: <span class="digit">5</span></div>
     <div class="follow-box">
         <p>Clique abaixo para ir até o meu perfil e comece a seguir:</p>
         <a href="https://www.instagram.com/perfildohenrique" target="_blank">
@@ -105,7 +134,7 @@
             const countdownElement = document.getElementById("countdown");
             const interval = setInterval(() => {
                 countdown--;
-                countdownElement.innerText = `Próxima atualização em: ${countdown}`;
+                countdownElement.innerHTML = `Próxima atualização em: <span class="digit">${countdown}</span>`;
                 if (countdown === 0) {
                     clearInterval(interval);
                     getFollowers();
