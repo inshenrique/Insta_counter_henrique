@@ -72,6 +72,12 @@
             font-size: 1.2em;
             color: #333;
         }
+        .updating {
+            font-size: 1.5em;
+            color: #333;
+            display: inline-block;
+            margin: 0 5px;
+        }
     </style>
 </head>
 <body>
@@ -137,7 +143,7 @@
                 if (countdown > 0) {
                     countdownElement.innerHTML = `Próxima atualização em: <span class="digit">${countdown}</span>`;
                 } else {
-                    countdownElement.innerHTML = `Atualizando...`;
+                    countdownElement.innerHTML = `Próxima atualização em: <span class="updating">Atualizando...</span>`;
                 }
                 if (countdown === 0) {
                     clearInterval(interval);
