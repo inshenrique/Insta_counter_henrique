@@ -33,6 +33,7 @@
             margin: 2px;
             border-radius: 5px;
             font-size: 2em;
+            transition: transform 0.5s ease-in-out;
         }
         .countdown-box {
             margin-top: 20px;
@@ -65,7 +66,7 @@
     <div class="countdown-box" id="countdown">Próxima atualização em: 10</div>
     <div class="follow-box">
         <a href="https://www.instagram.com/perfildohenrique" target="_blank">
-            <img src="follow.png">
+            <img src="follow.png" alt="Siga no Instagram">
         </a>
     </div>
     
@@ -89,7 +90,13 @@
             const digits = document.querySelectorAll('.digit');
             const numStr = number.toString().padStart(6, '0');
             digits.forEach((digit, i) => {
-                digit.innerText = numStr[i];
+                if (digit.innerText !== numStr[i]) {
+                    digit.style.transform = 'rotateX(90deg)';
+                    setTimeout(() => {
+                        digit.innerText = numStr[i];
+                        digit.style.transform = 'rotateX(0deg)';
+                    }, 250);
+                }
             });
         }
 
