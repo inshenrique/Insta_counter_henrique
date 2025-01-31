@@ -77,6 +77,10 @@
             color: #333;
             display: inline-block;
             margin: 0 5px;
+            background: linear-gradient(to bottom, #8b00ff, #ff007f); /* Degradê roxo para rosa */
+            color: white; /* Números em branco */
+            padding: 10px 15px;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -143,7 +147,7 @@
                 if (countdown > 0) {
                     countdownElement.innerHTML = `Próxima atualização em: <span class="digit">${countdown}</span>`;
                 } else {
-                    countdownElement.innerHTML = `Próxima atualização em: <span class="updating">Atualizando...</span>`;
+                    countdownElement.innerHTML = `<span class="updating">Atualizando...</span>`;
                 }
                 if (countdown === 0) {
                     clearInterval(interval);
