@@ -71,7 +71,7 @@
     
     <script>
         async function getFollowers() {
-            const token = "SUA_ACCESS_TOKEN_AQUI";
+            const token = "IGAANTJNYPFOJBZAE1ORkxwNDNoM245T2JTd2Rnb25GRzNTeEdfU2g4cE9vbmVtOGRPQzhxSHFlaEctR0FBcVplNTlkSTJSZAUlPNUFMdmVYQ09CY2hYdGp0ODA4VWlqdmhUbnNMVTROYlp1RlRhMlQ4VHc3Ujg0RndCVFhVTTRiYwZDZD";
             const url = `https://graph.instagram.com/me?fields=username,followers_count&access_token=${token}`;
             try {
                 const response = await fetch(url, { headers: { 'Accept': 'application/json' } });
