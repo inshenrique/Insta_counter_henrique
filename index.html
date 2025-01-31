@@ -55,19 +55,18 @@
     <div class="counter-box">
         <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="50" alt="Instagram Logo">
         <div id="followers" class="split-flap">
-            <span class="digit">3</span>
-            <span class="digit">3</span>
-            <span class="digit">3</span>
-            <span class="digit">3</span>
+            <span class="digit">0</span>
+            <span class="digit">0</span>
+            <span class="digit">0</span>
+            <span class="digit">0</span>
             <span class="digit">0</span>
             <span class="digit">0</span>
         </div>
     </div>
     <div class="countdown-box" id="countdown">Próxima atualização em: 10</div>
     <div class="follow-box">
-        <p>Clique abaixo para ir até o meu perfil e comece a seguir:</p>
         <a href="https://www.instagram.com/perfildohenrique" target="_blank">
-            <img src="follow.png" alt="Siga no Instagram">
+            <img src="https://i.imgur.com/FzB4QJg.png" alt="Siga no Instagram">
         </a>
     </div>
     
@@ -80,35 +79,25 @@
                 if (!response.ok) throw new Error('Erro na resposta da API');
                 const data = await response.json();
                 if (data.followers_count) {
-                    animateCounter(data.followers_count);
+                    updateCounter(data.followers_count);
                 }
             } catch (error) {
                 console.error("Erro na API:", error);
             }
         }
 
-        function animateCounter(targetNumber) {
+        function updateCounter(number) {
             const digits = document.querySelectorAll('.digit');
-            const currentNumber = parseInt(digits[0].innerText + digits[1].innerText + digits[2].innerText + digits[3].innerText + digits[4].innerText + digits[5].innerText);
-            const increment = targetNumber > currentNumber ? 1 : -1;
-
-            let current = currentNumber;
-            const interval = setInterval(() => {
-                current += increment;
-                const numStr = current.toString().padStart(6, '0');
-                digits.forEach((digit, i) => {
-                    if (digit.innerText !== numStr[i]) {
-                        digit.style.transform = 'rotateX(90deg)';
-                        setTimeout(() => {
-                            digit.innerText = numStr[i];
-                            digit.style.transform = 'rotateX(0deg)';
-                        }, 250);
-                    }
-                });
-                if (current === targetNumber) {
-                    clearInterval(interval);
+            const numStr = number.toString().padStart(6, '0');
+            digits.forEach((digit, i) => {
+                if (digit.innerText !== numStr[i]) {
+                    digit.style.transform = 'rotateX(90deg)';
+                    setTimeout(() => {
+                        digit.innerText = numStr[i];
+                        digit.style.transform = 'rotateX(0deg)';
+                    }, 250);
                 }
-            }, 100);
+            });
         }
 
         function startCountdown() {
