@@ -9,56 +9,51 @@
             font-family: Arial, sans-serif;
             text-align: center;
             margin-top: 50px;
-            background-color: #f4f4f4;
+            background-color: #f9f9f9;
         }
-        .counter-container {
+        .counter-box {
             display: inline-flex;
             align-items: center;
-            background: white;
-            padding: 20px;
+            background: #fff;
+            padding: 15px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        .instagram-logo {
-            width: 40px;
-            margin-right: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         .split-flap {
-            display: flex;
-            font-size: 2em;
+            font-size: 2.5em;
             font-weight: bold;
+            color: #E1306C;
             font-family: monospace;
-            background: #E1306C;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: inset 0 -4px 6px rgba(0, 0, 0, 0.2);
+            display: flex;
         }
         .digit {
-            width: 35px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             background: black;
             color: white;
+            padding: 10px 15px;
             margin: 2px;
             border-radius: 5px;
-            font-size: 1.5em;
+            font-size: 2em;
         }
-        #countdown {
+        .countdown-box {
+            margin-top: 20px;
             font-size: 1.2em;
             color: #333;
-            margin-top: 10px;
+        }
+        .follow-box {
+            margin-top: 20px;
+        }
+        .follow-box img {
+            width: 200px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
     <h1>Seguidores do Instagram</h1>
     <p>O número atual de seguidores @perfildohenrique é:</p>
-    <div class="counter-container">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" class="instagram-logo">
-        <div class="split-flap" id="followers">
+    <div class="counter-box">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="50" alt="Instagram Logo">
+        <div id="followers" class="split-flap">
             <span class="digit">0</span>
             <span class="digit">0</span>
             <span class="digit">0</span>
@@ -67,39 +62,40 @@
             <span class="digit">0</span>
         </div>
     </div>
-    <p id="countdown">Próxima atualização em: 5</p>
-
+    <div class="countdown-box" id="countdown">Próxima atualização em: 10</div>
+    <div class="follow-box">
+        <a href="https://www.instagram.com/perfildohenrique" target="_blank">
+            <img src="https://i.imgur.com/FzB4QJg.png" alt="Siga no Instagram">
+        </a>
+    </div>
+    
     <script>
         async function getFollowers() {
-            const token = "IGAANTJNYPFOJBZAE1ORkxwNDNoM245T2JTd2Rnb25GRzNTeEdfU2g4cE9vbmVtOGRPQzhxSHFlaEctR0FBcVplNTlkSTJSZAUlPNUFMdmVYQ09CY2hYdGp0ODA4VWlqdmhUbnNMVTROYlp1RlRhMlQ4VHc3Ujg0RndCVFhVTTRiYwZDZD"; 
+            const token = "SUA_ACCESS_TOKEN_AQUI";
             const url = `https://graph.instagram.com/me?fields=username,followers_count&access_token=${token}`;
-
             try {
                 const response = await fetch(url, { headers: { 'Accept': 'application/json' } });
                 if (!response.ok) throw new Error('Erro na resposta da API');
-
                 const data = await response.json();
                 if (data.followers_count) {
-                    updateDisplay(data.followers_count);
+                    updateCounter(data.followers_count);
                 }
             } catch (error) {
                 console.error("Erro na API:", error);
             }
         }
 
-        function updateDisplay(followers) {
-            const digits = String(followers).padStart(6, '0').split('');
-            const elements = document.querySelectorAll(".digit");
-
-            elements.forEach((el, i) => {
-                el.textContent = digits[i];
+        function updateCounter(number) {
+            const digits = document.querySelectorAll('.digit');
+            const numStr = number.toString().padStart(6, '0');
+            digits.forEach((digit, i) => {
+                digit.innerText = numStr[i];
             });
         }
 
         function startCountdown() {
-            let countdown = 5;
+            let countdown = 10;
             const countdownElement = document.getElementById("countdown");
-
             const interval = setInterval(() => {
                 countdown--;
                 countdownElement.innerText = `Próxima atualização em: ${countdown}`;
