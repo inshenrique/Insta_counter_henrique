@@ -11,11 +11,13 @@
             text-align: center;
             margin-top: 50px;
             background-color: #f9f9f9;
+            padding: 20px;
         }
         .profile-header {
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-wrap: wrap;
             margin-bottom: 20px;
         }
         .profile-header img {
@@ -32,34 +34,29 @@
         .counter-box {
             display: inline-flex;
             align-items: center;
-            background: #f5f5dc; /* Cor creme */
+            background: #f5f5dc;
             padding: 15px;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
+            margin-bottom: 20px;
         }
         .split-flap {
             font-size: 2.5em;
             font-weight: bold;
             font-family: monospace;
             display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
         }
         .digit {
-            background: linear-gradient(to bottom, #8b00ff, #ff007f); /* Degradê roxo para rosa */
-            color: white; /* Números em branco */
+            background: linear-gradient(to bottom, #8b00ff, #ff007f);
+            color: white;
             padding: 10px 15px;
             margin: 2px;
             border-radius: 5px;
             font-size: 2em;
             transition: transform 0.5s ease-in-out;
-        }
-        .countdown-box {
-            margin-top: 20px;
-            font-size: 1.2em;
-            color: #333;
-        }
-        .countdown-box .digit {
-            font-size: 1.5em;
-            margin: 0 5px;
         }
         .follow-box {
             margin-top: 20px;
@@ -67,20 +64,24 @@
         .follow-box img {
             width: 200px;
             cursor: pointer;
+            max-width: 100%;
         }
         .follow-box p {
             font-size: 1.2em;
             color: #333;
+            line-height: 1.5;
         }
-        .updating {
-            font-size: 1.5em;
-            color: #333;
-            display: inline-block;
-            margin: 0 5px;
-            background: linear-gradient(to bottom, #8b00ff, #ff007f); /* Degradê roxo para rosa */
-            color: white; /* Números em branco */
-            padding: 10px 15px;
-            border-radius: 5px;
+        @media (max-width: 600px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .profile-header img {
+                margin-bottom: 10px;
+            }
+            .counter-box {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -101,14 +102,14 @@
             <span class="digit">0</span>
         </div>
     </div>
-    <div class="countdown-box" id="countdown">Próxima atualização em: <span class="digit">5</span></div>
     <div class="follow-box">
-        <p>Clique abaixo para ir até o meu perfil e comece a seguir:</p>
+        <p>Quer ver esse número subir?</p>
+        <p>Siga agora e acompanhe a mudança ao vivo!</p>
         <a href="https://www.instagram.com/perfildohenrique" target="_blank">
             <img src="follow.png" alt="Siga no Instagram">
         </a>
     </div>
-    
+
     <script>
         async function getFollowers() {
             const token = "IGAANTJNYPFOJBZAE1ORkxwNDNoM245T2JTd2Rnb25GRzNTeEdfU2g4cE9vbmVtOGRPQzhxSHFlaEctR0FBcVplNTlkSTJSZAUlPNUFMdmVYQ09CY2hYdGp0ODA4VWlqdmhUbnNMVTROYlp1RlRhMlQ4VHc3Ujg0RndCVFhVTTRiYwZDZD";
@@ -139,26 +140,12 @@
             });
         }
 
-        function startCountdown() {
-            let countdown = 5;
-            const countdownElement = document.getElementById("countdown");
-            const interval = setInterval(() => {
-                countdown--;
-                if (countdown > 0) {
-                    countdownElement.innerHTML = `Próxima atualização em: <span class="digit">${countdown}</span>`;
-                } else {
-                    countdownElement.innerHTML = `<span class="updating">Atualizando...</span>`;
-                }
-                if (countdown === 0) {
-                    clearInterval(interval);
-                    getFollowers();
-                    startCountdown();
-                }
-            }, 1000);
+        function updatePeriodically() {
+            setInterval(getFollowers, 5000);
         }
 
         getFollowers();
-        startCountdown();
+        updatePeriodically();
     </script>
 </body>
 </html>
