@@ -20,7 +20,7 @@
             margin-bottom: 20px;
         }
         .split-flap {
-            font-size: 2.5em;
+            font-size: 2em; /* Ajuste a font-size para tornar os números menores */
             font-weight: bold;
             font-family: monospace;
             display: flex;
@@ -31,14 +31,12 @@
         .digit {
             background: linear-gradient(to bottom, #8b00ff, #ff007f);
             color: white;
-            padding: 10px 15px;
+            padding: 8px 12px; /* Ajuste o padding para tornar cada dígito menor */
             margin: 2px;
             border-radius: 5px;
-            font-size: 1.5em;
-            width: auto; /* Ajuste a largura automaticamente */
-            height: auto; /* Ajuste a altura automaticamente */
-            min-width: 30px; /* Tamanho mínimo para a largura */
-            min-height: 45px; /* Tamanho mínimo para a altura */
+            font-size: 1.2em; /* Ajuste a font-size para tornar os números menores */
+            width: 30px; /* Ajuste a largura de cada dígito */
+            height: 40px; /* Ajuste a altura de cada dígito */
             transition: transform 0.5s ease-in-out;
             display: flex;
             align-items: center;
@@ -48,8 +46,7 @@
 </head>
 <body class="is-preload">
 
-		<!-- Header -->
-			  <!-- Header -->
+    <!-- Header -->
     <header id="header">
         <div class="content">
             <h1><a href="#">Projeto Contador</a></h1>
@@ -76,43 +73,9 @@
         <div class="image phone"><div class="inner"><img src="images/screen.jpg" alt="" /></div></div>
     </header>
 
+    <audio id="changeSound" src="som.mp3" preload="auto"></audio>
+
     <script>
-        async function getFollowers() {
-            const token = "IGAANTJNYPFOJBZAE1ORkxwNDNoM245T2JTd2Rnb25GRzNTeEdfU2g4cE9vbmVtOGRPQzhxSHFlaEctR0FBcVplNTlkSTJSZAUlPNUFMdmVYQ09CY2hYdGp0ODA4VWlqdmhUbnNMVTROYlp1RlRhMlQ4VHc3Ujg0RndCVFhVTTRiYwZDZD";
-            const url = `https://graph.instagram.com/me?fields=username,followers_count&access_token=${token}`;
-            try {
-                const response = await fetch(url, { headers: { 'Accept': 'application/json' } });
-                if (!response.ok) throw new Error('Erro na resposta da API');
-                const data = await response.json();
-                if (data.followers_count) {
-                    updateCounter(data.followers_count);
-                }
-            } catch (error) {
-                console.error("Erro na API:", error);
-            }
-        }
-
-        function updateCounter(number) {
-            const digits = document.querySelectorAll('.digit');
-            const numStr = number.toString().padStart(6, '0');
-            digits.forEach((digit, i) => {
-                if (digit.innerText !== numStr[i]) {
-                    digit.style.transform = 'rotateX(90deg)';
-                    setTimeout(() => {
-                        digit.innerText = numStr[i];
-                        digit.style.transform = 'rotateX(0deg)';
-                    }, 250);
-                }
-            });
-        }
-
-        function updatePeriodically() {
-            setInterval(getFollowers, 3000);
-        }
-
-        getFollowers();
-        updatePeriodically();
-    </script>
 
 		<!-- One -->
 			<section id="one" class="wrapper style2 special">
