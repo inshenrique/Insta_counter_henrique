@@ -35,9 +35,14 @@
             margin: 2px;
             border-radius: 5px;
             font-size: 1.5em;
-            width: 30px;
-            height: 45px;
+            width: auto; /* Ajuste a largura automaticamente */
+            height: auto; /* Ajuste a altura automaticamente */
+            min-width: 30px; /* Tamanho mínimo para a largura */
+            min-height: 45px; /* Tamanho mínimo para a altura */
             transition: transform 0.5s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     </style>
 </head>
