@@ -1,30 +1,111 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<title>Perfil do Henrique</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
+<head>
+    <title>Perfil do Henrique</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+        .counter-box {
+            display: inline-flex;
+            align-items: center;
+            background: #f5f5dc;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .split-flap {
+            font-size: 2.5em;
+            font-weight: bold;
+            font-family: monospace;
+            display: flex;
+            white-space: nowrap;
+            overflow: hidden;
+            justify-content: center;
+        }
+        .digit {
+            background: linear-gradient(to bottom, #8b00ff, #ff007f);
+            color: white;
+            padding: 10px 15px;
+            margin: 2px;
+            border-radius: 5px;
+            font-size: 1.5em;
+            transition: transform 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="is-preload">
 
 		<!-- Header -->
-			<header id="header">
-				<div class="content">
-					<h1><a href="#">Projeto Contador</a></h1>
-					<p>Esse é um projeto que visa mostrar o número<br />
-       					de seguidores do meu perfil no Instagram.<br />
-       					Se você gostou, me ajude seguindo meu perfil!<br />
-       					Vamos crescer juntos!</p>
-					<ul class="actions">
-						 <li><a href="https://www.instagram.com/perfildohenrique" class="button primary icon solid"><i class="fas fa-instagram"></i> Perfil Instagram</a></li>
-						<li><a href="#one" class="button icon solid fa-chevron-down scrolly">Saiba Mais</a></li>
-					</ul>
-				</div>
-				<div class="image phone"><div class="inner"><img src="images/screen.jpg" alt="" /></div></div>
-			</header>
+			  <!-- Header -->
+    <header id="header">
+        <div class="content">
+            <h1><a href="#">Projeto Contador</a></h1>
+            <div class="counter-box">
+                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="50" alt="Instagram Logo">
+                <div id="followers" class="split-flap">
+                    <span class="digit">0</span>
+                    <span class="digit">0</span>
+                    <span class="digit">0</span>
+                    <span class="digit">0</span>
+                    <span class="digit">0</span>
+                    <span class="digit">0</span>
+                </div>
+            </div>
+            <p>Esse é um projeto que visa mostrar o número<br />
+            de seguidores do meu perfil no Instagram.<br />
+            Se você gostou, me ajude seguindo meu perfil!<br />
+            Vamos crescer juntos!</p>
+            <ul class="actions">
+                <li><a href="https://www.instagram.com/perfildohenrique" class="button primary icon solid"><i class="fas fa-instagram"></i> Perfil Instagram</a></li>
+                <li><a href="#one" class="button icon solid fa-chevron-down scrolly">Saiba Mais</a></li>
+            </ul>
+        </div>
+        <div class="image phone"><div class="inner"><img src="images/screen.jpg" alt="" /></div></div>
+    </header>
+
+    <script>
+        async function getFollowers() {
+            const token = "IGAANTJNYPFOJBZAE1ORkxwNDNoM245T2JTd2Rnb25GRzNTeEdfU2g4cE9vbmVtOGRPQzhxSHFlaEctR0FBcVplNTlkSTJSZAUlPNUFMdmVYQ09CY2hYdGp0ODA4VWlqdmhUbnNMVTROYlp1RlRhMlQ4VHc3Ujg0RndCVFhVTTRiYwZDZD";
+            const url = `https://graph.instagram.com/me?fields=username,followers_count&access_token=${token}`;
+            try {
+                const response = await fetch(url, { headers: { 'Accept': 'application/json' } });
+                if (!response.ok) throw new Error('Erro na resposta da API');
+                const data = await response.json();
+                if (data.followers_count) {
+                    updateCounter(data.followers_count);
+                }
+            } catch (error) {
+                console.error("Erro na API:", error);
+            }
+        }
+
+        function updateCounter(number) {
+            const digits = document.querySelectorAll('.digit');
+            const numStr = number.toString().padStart(6, '0');
+            digits.forEach((digit, i) => {
+                if (digit.innerText !== numStr[i]) {
+                    digit.style.transform = 'rotateX(90deg)';
+                    setTimeout(() => {
+                        digit.innerText = numStr[i];
+                        digit.style.transform = 'rotateX(0deg)';
+                    }, 250);
+                }
+            });
+        }
+
+        function updatePeriodically() {
+            setInterval(getFollowers, 3000);
+        }
+
+        getFollowers();
+        updatePeriodically();
+    </script>
 
 		<!-- One -->
 			<section id="one" class="wrapper style2 special">
