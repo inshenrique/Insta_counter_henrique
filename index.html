@@ -76,6 +76,50 @@
     <audio id="changeSound" src="som.mp3" preload="auto"></audio>
 
     <script>
+        async function getFollowers() {
+            const token = "IGAANTJNYPFOJBZAE1ORkxwNDNoM245T2JTd2Rnb25GRzNTeEdfU2g4cE9vbmVtOGRPQzhxSHFlaEctR0FBcVplNTlkSTJSZAUlPNUFMdmVYQ09CY2hYdGp0ODA4VWlqdmhUbnNMVTROYlp1RlRhMlQ4VHc3Ujg0RndCVFhVTTRiYwZDZD";
+            const url = `https://graph.instagram.com/me?fields=username,followers_count&access_token=${token}`;
+            try {
+                const response = await fetch(url, { headers: { 'Accept': 'application/json' } });
+                if (!response.ok) throw new Error('Erro na resposta da API');
+                const data = await response.json();
+                if (data.followers_count) {
+                    updateCounter(data.followers_count);
+                }
+            } catch (error) {
+                console.error("Erro na API:", error);
+            }
+        }
+
+        function updateCounter(number) {
+            const digits = document.querySelectorAll('.digit');
+            const numStr = number.toString().padStart(6, '0');
+            const changeSound = document.getElementById('changeSound');
+            let changed = false;
+
+            digits.forEach((digit, i) => {
+                if (digit.innerText !== numStr[i]) {
+                    changed = true;
+                    digit.style.transform = 'rotateX(90deg)';
+                    setTimeout(() => {
+                        digit.innerText = numStr[i];
+                        digit.style.transform = 'rotateX(0deg)';
+                    }, 250);
+                }
+            });
+
+            if (changed) {
+                changeSound.play();
+            }
+        }
+
+        function updatePeriodically() {
+            setInterval(getFollowers, 3000);
+        }
+
+        getFollowers();
+        updatePeriodically();
+    </script>
 
 		<!-- One -->
 			<section id="one" class="wrapper style2 special">
